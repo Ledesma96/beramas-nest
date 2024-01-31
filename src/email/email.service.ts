@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import * as nodemailer from "nodemailer";
 import { Email } from './email.entity';
+import 'dotenv/config'
 
 @Injectable()
 export class EmailService {
@@ -8,8 +9,8 @@ export class EmailService {
         service: 'gmail',
         port: 587,
         auth: {
-        user: 'mailingprueba61@gmail.com',
-        pass: 'bgrroqifncmvzxzk',
+        user: process.env.EMAIL_USER,
+        pass: process.env.EMAIL_PASS,
         },
     })
 
