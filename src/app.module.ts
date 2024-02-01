@@ -5,9 +5,10 @@ import { ServeStaticModule } from '@nestjs/serve-static';
 import { join } from 'path';
 import { EmailService } from './email/email.service';
 import { EmailModule } from './email/email.module';
+import 'dotenv/config'
 
 @Module({
-  imports: [MongooseModule.forRoot('mongodb+srv://gabrielmledesma96:Lolalaloca1@cluster0.a4qufb6.mongodb.net/Bera+?retryWrites=true&w=majority'),
+  imports: [MongooseModule.forRoot(process.env.URL_MONGODB),
   ServeStaticModule.forRoot({
     serveRoot: '/products',
     rootPath: join(__dirname, '..', 'upload', 'products')
