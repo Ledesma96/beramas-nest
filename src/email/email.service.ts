@@ -9,13 +9,18 @@ export class EmailService {
         service: 'gmail',
         port: 587,
         auth: {
-        user: process.env.EMAIL_USER,
-        pass: process.env.EMAIL_PASS,
+        user: 'mailingprueba61@gmail.com',
+        pass: 'bgrroqifncmvzxzk',
         },
+        tls: {
+            rejectUnauthorized: false // Ignorar los errores de certificado
+        }
     })
 
-    async sendEmailContact(data: Email): Promise<{success: boolean, message: string}>{
-        const mailOption = {
+    async sendEmailContact(data: any): Promise<{success: boolean, message: string}>{
+    
+        
+        const mailOptions = {
             from :'mailingprueba61@gmail.com',
             to: 'gabriel.m.ledesma96@gmail.com',
             subject: 'Nueva consulta',
@@ -26,17 +31,20 @@ export class EmailService {
                     <h4>Telefono: ${data.phone} </h4>
                     <h4> Mensaje: </h4>
                     <p> ${data.message} </p>
-                </di>`
+                </div>`
         }
+        
+        console.log(await this.transporter.sendMail(mailOptions));
         try {
-            const info = await this.transporter.sendMail(mailOption)
+            const info = await this.transporter.sendMail(mailOptions)
+            
             if(!info){
                 return {success: false, message: 'Error sending an email'}
             } else {
                 return {success: true, message: 'Send email successfully'}
             }
         } catch (error) {
-            throw error.message
+            return {success: false, message: error.message}
         }
     }
 }

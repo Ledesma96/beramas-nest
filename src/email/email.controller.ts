@@ -7,9 +7,12 @@ export class EmailController {
     constructor(private emailServices: EmailService){}
 
     @Post()
-    async sendEmailContact(@Body() data: Email ): Promise<{success: boolean, message: string}>{
+    async sendEmailContact(@Body() data: any ): Promise<{success: boolean, message: string}>{
+        
         try {
+            
            const email = await  this.emailServices.sendEmailContact(data)
+           
            if(email.success){
                return email
            } else {
