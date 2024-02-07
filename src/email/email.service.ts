@@ -90,7 +90,7 @@ export class EmailService {
         
         const mailOptionsCommerce = {
             from :'beramassillones@gmail.com',
-            to: 'gabriel.m.ledesma96@gmail.com',
+            to: 'beramassillones@gmail.com',
             subject: 'Nueva consulta',
             html:`
             <!DOCTYPE html>

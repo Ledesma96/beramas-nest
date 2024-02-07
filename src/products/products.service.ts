@@ -64,8 +64,10 @@ export class ProductsService {
         }
     }
 
-    async updateProduct(data: UpdateProductsDto, id: string): Promise<{success: boolean, message: string}>{
+    async updateProduct(data: UpdateProductsDto, id: string, files: Express.Multer.File[]): Promise<{success: boolean, message: string}>{
         try {
+            data.thumbnail = files.map(file => `/upload/products/${file.filename}`)
+            console.log(data.thumbnail)
             const result = await this.productModel.findByIdAndUpdate(id, data);
             if(result){
                 return { success: true, message:'Product updated successfully'}

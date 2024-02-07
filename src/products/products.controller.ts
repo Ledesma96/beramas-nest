@@ -17,6 +17,7 @@ import { Product } from './products.entity';
 import { ProductsDto, UpdateProductsDto } from 'src/dto/products.dto';
 import { FilesInterceptor } from '@nestjs/platform-express';
 import { diskStorage } from 'multer';
+import { extname } from 'path';
 
 @Controller('api/v1/products')
 export class ProductsController {
@@ -65,7 +66,9 @@ export class ProductsController {
                 storage: diskStorage({
                     destination: './upload/products',
                     filename: function(req, file, cb){
-                        cb(null, file.originalname + Date.now() + '.jpg')
+                        const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
+                        const originalName = file.originalname.replace(/\.[^/.]+$/, '');
+                        cb(null, `${originalName}-${uniqueSuffix}${extname(file.originalname)}`);
                     }
                 })
             }
@@ -82,13 +85,30 @@ export class ProductsController {
         }
     }
 
+    @UseInterceptors(
+        FilesInterceptor(
+          'file', 
+          undefined,
+          {
+            storage: diskStorage({
+              destination: './upload/products',
+              filename: function(req, file, cb) {
+                const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
+                const originalName = file.originalname.replace(/\.[^/.]+$/, '');
+                cb(null, `${originalName}-${uniqueSuffix}${extname(file.originalname)}`);
+              }
+            })
+          }
+        )
+      )
     @Patch(':id')
     async updateProducts(
+        @UploadedFiles() files : Express.Multer.File[],
         @Body() data: UpdateProductsDto,
         @Param('id') id: string
         ): Promise<{success: boolean, message: string}>{
         try {
-            const result = await this.productsServices.updateProduct(data, id)
+            const result = await this.productsServices.updateProduct(data, id, files)
             if(result.success){
                 return result
             } else {

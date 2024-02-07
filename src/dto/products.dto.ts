@@ -39,8 +39,8 @@ export class UpdateProductsDto{
 
     @IsOptional()
     @IsArray()
-    @MinLength(1)
-    @MaxLength(5)
-    thumbnail: [string, string, string, string, string]
+    @MinLength(1, { message: 'Debe haber al menos un elemento en la matriz' })
+    @MaxLength(5, { message: 'No se permiten más de 5 elementos en la matriz' })
+    thumbnail: any[];
 
 }
