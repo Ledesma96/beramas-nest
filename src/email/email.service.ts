@@ -9,8 +9,8 @@ export class EmailService {
         service: 'gmail',
         port: 587,
         auth: {
-        user: 'mailingprueba61@gmail.com',
-        pass: 'bgrroqifncmvzxzk',
+        user: 'beramassillones@gmail.com',
+        pass: 'zouhvzsjddzverde',
         },
         tls: {
             rejectUnauthorized: false // Ignorar los errores de certificado
@@ -20,16 +20,16 @@ export class EmailService {
     async sendEmailContact(data: any): Promise<{success: boolean, message: string}>{
     
         const mailOptionsClients = {
-            from: 'mailingprueba61@gmail.com',
+            from: 'beramassillones@gmail.com',
             to: data.email,
-            subject: '¡Bienvenido a nuestra mueblería!',
+            subject: '¡Bienvenido a Bera mas sillones',
             html: `
             <!DOCTYPE html>
             <html lang="en">
             <head>
                 <meta charset="UTF-8">
                 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-                <title>Bienvenido a nuestra mueblería</title>
+                <title>Bienvenido a Bera mas sillones</title>
                 <style>
                     @import url('https://fonts.googleapis.com/css2?family=Mr+Dafoe&display=swap');
                     body {
@@ -89,7 +89,7 @@ export class EmailService {
         }
         
         const mailOptionsCommerce = {
-            from :'mailingprueba61@gmail.com',
+            from :'beramassillones@gmail.com',
             to: 'gabriel.m.ledesma96@gmail.com',
             subject: 'Nueva consulta',
             html:`
@@ -148,6 +148,8 @@ export class EmailService {
         
         try {
             const mailClient = await this.transporter.sendMail(mailOptionsClients)
+            console.log(mailClient);
+            
             const mailCommerce = await this.transporter.sendMail(mailOptionsCommerce)
             
             if(!mailCommerce){

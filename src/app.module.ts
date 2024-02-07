@@ -10,8 +10,8 @@ import 'dotenv/config'
 @Module({
   imports: [MongooseModule.forRoot(process.env.URL_MONGODB),
   ServeStaticModule.forRoot({
-    serveRoot: '/products',
-    rootPath: join(__dirname, '..', 'upload', 'products')
+    serveRoot: '/upload',
+    rootPath: join(__dirname, '..', 'upload')
   }),
   
    ProductsModule,
