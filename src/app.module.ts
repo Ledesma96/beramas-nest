@@ -1,22 +1,22 @@
 import { Module } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
-import { ProductsModule } from './products/products.module';
 import { ServeStaticModule } from '@nestjs/serve-static';
+import 'dotenv/config';
 import { join } from 'path';
-import { EmailService } from './email/email.service';
 import { EmailModule } from './email/email.module';
-import 'dotenv/config'
+import { EmailService } from './email/email.service';
+import { ProductsModule } from './products/products.module';
 
 @Module({
-  imports: [MongooseModule.forRoot(process.env.URL_MONGODB),
+  imports: [MongooseModule.forRoot('mongodb+srv://beramassillones:E6jJhFoic9tUWhPW@cluster0.l3nwv0y.mongodb.net/Bera+?retryWrites=true&w=majority'),
   ServeStaticModule.forRoot({
     serveRoot: '/upload',
     rootPath: join(__dirname, '..', 'upload')
   }),
   
-   ProductsModule,
+  ProductsModule,
   
-   EmailModule],
+  EmailModule],
   providers: [EmailService],
 })
 export class AppModule {}
