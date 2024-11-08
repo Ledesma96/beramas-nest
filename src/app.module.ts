@@ -8,7 +8,7 @@ import { EmailService } from './email/email.service';
 import { ProductsModule } from './products/products.module';
 
 @Module({
-  imports: [MongooseModule.forRoot('mongodb+srv://beramassillones:E6jJhFoic9tUWhPW@cluster0.l3nwv0y.mongodb.net/Bera+?retryWrites=true&w=majority'),
+  imports: [MongooseModule.forRoot(process.env.URL_MONGODB),
   ServeStaticModule.forRoot({
     serveRoot: '/upload',
     rootPath: join(__dirname, '..', 'upload')
